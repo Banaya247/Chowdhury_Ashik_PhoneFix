@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link th:href = "@{/css/mystyles.css}" rel="stylesheet">
+</head>
+  <body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand">We Fix Your Phone</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item"><a class="nav-link" href="login">Login Page</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="select-store.html">Select Store</a></li>
+                    <li class="nav-item"><a class="nav-link" href="customer-registration">Customer Registration</a></li>
+                    <li class="nav-item"><a class="nav-link" href="book-appointment">Book Appointment</a></li>
+                    <li class="nav-item"><a class="nav-link" href="appointment-confirmation">Appointment Confirmation</a></li>
+                    <li class="nav-item"><a class="nav-link" href="appointment-lookup">Lookup Your Appointment</a></li>
+                </ul>
+            </div>
+        </div>
+       </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <section class = "jumbotron text-center mt-4">
+                    <div class = "container">
+
+                        <h2>You have selected <b><u><span th:text="${infoSelectStore}"></span></u></b> care services</h2>
+
+                        <h4 class = "jumbotron mt-4">
+                           Below is a list of Stores that provide your selected care service.
+                        </h4>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+
+                <div>
+                    <h4 class="text-danger text-center"><span th:text="${insertedDangerStore}"></span></h4>
+                </div>
+
+                <div th:if="${not #lists.isEmpty(deviceTechniciansQueens)}">
+                    <section class="vh-10 gradient-custom mt-3" id="techniciansTable">
+                        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                            <div class="card-body p-4 p-md-3 m-3">
+
+                                <h4 class = "jumbotron-heading">Store Queens</h4>
+
+                                <table class="table">
+                                    <tr>
+                                        <th scope="col">Technician Name</th>
+                                        <th scope="col">Device</th>
+                                        <th scope="col"></th>
+                                    </tr>
+
+                                    <tr th:each="technician: ${deviceTechniciansQueens}">
+                                        <td th:text="${technician.name}"></td>
+                                        <td th:text="${technician.devices}"></td>
+                                        <td>
+                                            <form method="post" th:action="@{/post-select-store}">
+
+                                                <input
+                                                        type="hidden"
+                                                        id="storeSelectQueens"
+                                                        name="storeChoice"
+                                                        th:value="Queens"
+                                                        class="form-control form-control-lg"
+                                                />
+                                                <input
+                                                        type="hidden"
+                                                        id="technicianSelectQueens"
+                                                        name="technicianChoice"
+                                                        th:value="*{technician.name}"
+                                                        class="form-control form-control-lg"
+                                                />
+
+                                                <button onclick = "selectStoreAndTechnician()" class="btn btn-primary"> Select </button>
+
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div th:if="${not #lists.isEmpty(deviceTechniciansManhattan)}">
+                    <section class="vh-10 gradient-custom mt-4" id="techniciansTable01">
+                        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                            <div class="card-body p-4 p-md-3 m-3">
+
+                                <h4 class = "jumbotron-heading">Store Manhattan</h4>
+
+                                <table class="table">
+                                    <tr>
+                                        <th scope="col">Technician Name</th>
+                                        <th scope="col">Device</th>
+                                        <th scope="col"></th>
+                                    </tr>
+
+                                    <tr th:each="technician: ${deviceTechniciansManhattan}">
+                                        <td th:text="${technician.name}"></td>
+                                        <td th:text="${technician.devices}"></td>
+                                        <td>
+                                            <form method="post" th:action="@{/post-select-store}">
+                                                <input
+                                                        type="hidden"
+                                                        id="storeSelectManhattan"
+                                                        name="storeChoice"
+                                                        th:value="Manhattan"
+                                                        class="form-control form-control-lg"
+                                                />
+                                                <input
+                                                        type="hidden"
+                                                        id="technicianSelectManhattan"
+                                                        name="technicianChoice"
+                                                        th:value="*{technician.name}"
+                                                        class="form-control form-control-lg"
+                                                />
+                                                <button onclick = "selectStoreAndTechnician()" class="btn btn-primary"> Select </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div th:if="${not #lists.isEmpty(deviceTechniciansBrooklyn)}">
+                    <section class="vh-10 gradient-custom mt-4" id="techniciansTable02">
+                        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                            <div class="card-body p-4 p-md-3 m-3">
+
+                                <h4 class = "jumbotron-heading">Store Brooklyn</h4>
+
+                                <table class="table">
+                                    <tr>
+                                        <th scope="col">Technician Name</th>
+                                        <th scope="col">Device</th>
+                                        <th scope="col"></th>
+                                    </tr>
+
+                                    <tr th:each="technician: ${deviceTechniciansBrooklyn}">
+                                        <td th:text="${technician.name}"></td>
+                                        <td th:text="${technician.devices}"></td>
+                                        <td>
+                                            <form method="post" th:action="@{/post-select-store}">
+
+                                                <input
+                                                        type="hidden"
+                                                        id="storeSelectBrooklyn"
+                                                        name="storeChoice"
+                                                        th:value="Brooklyn"
+                                                        class="form-control form-control-lg"
+                                                />
+                                                <input
+                                                        type="hidden"
+                                                        id="technicianSelectBrooklyn"
+                                                        name="technicianChoice"
+                                                        th:value="*{technician.name}"
+                                                        class="form-control form-control-lg"
+                                                />
+
+                                                <button onclick = "selectStoreAndTechnician()" class="btn btn-primary"> Select </button>
+
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div th:if="${not #lists.isEmpty(deviceTechniciansStatenIsland)}">
+                    <section class="vh-10 gradient-custom mt-4" id="techniciansTable03">
+                        <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                            <div class="card-body p-4 p-md-3 m-3">
+
+                                <h4 class = "jumbotron-heading">Store Staten Island</h4>
+
+                                <table class="table">
+                                    <tr>
+                                        <th scope="col">Technician Name</th>
+                                        <th scope="col">Device</th>
+                                        <th scope="col"></th>
+                                    </tr>
+
+                                    <tr th:each="technician: ${deviceTechniciansStatenIsland}">
+                                        <td th:text="${technician.name}"></td>
+                                        <td th:text="${technician.devices}"></td>
+                                        <td>
+                                            <form method="post" th:action="@{/post-select-store}">
+
+                                                <input
+                                                        type="hidden"
+                                                        id="storeSelectStatenIsland"
+                                                        name="storeChoice"
+                                                        th:value="StatenIsland"
+                                                        class="form-control form-control-lg"
+                                                />
+                                                <input
+                                                        type="hidden"
+                                                        id="technicianSelectStatenIsland"
+                                                        name="technicianChoice"
+                                                        th:value="*{technician.name}"
+                                                        class="form-control form-control-lg"
+                                                />
+
+                                                <button onclick = "selectStoreAndTechnician()" class="btn btn-primary"> Select </button>
+
+                                            </form>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <div class = "col-4 mt-1">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script th:src = "@{/js/script.js}"></script>
+
+  </body>
+</html>
